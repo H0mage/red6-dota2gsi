@@ -12,6 +12,10 @@ let matchid;
 let isMatchOver;
 
 const viewingDate = new Date();
+const minutes = viewingDate.getMinutes();
+const readeableDate = `${viewingDate.toLocaleDateString()} ${viewingDate.getHours()}:${
+  minutes < 10 ? "0" + minutes : minutes
+}`;
 
 gsiListener.events.on("newclient", function (client) {
   console.log("Connected, Waiting on game to end to record results");
@@ -33,7 +37,6 @@ gsiListener.events.on("newclient", function (client) {
           win_team === player.playerData.team_name ? "WIN" : "LOSS";
         const convertedTime = `${Math.floor(game_time / 60)}:${game_time % 60}`;
         const heroFullName = player.heroData.name.slice(14).split("_");
-        const readeableDate = `${viewingDate.toLocaleDateString()} ${viewingDate.toLocaleTimeString()}`;
 
         for (let i = 0; i < heroFullName.length; i++) {
           heroFullName[i] =
@@ -43,7 +46,7 @@ gsiListener.events.on("newclient", function (client) {
         const playerPayload = [
           readeableDate,
           matchid,
-          convertedTime,
+          `0:${convertedTime.slice(0, 5)}`,
           winStatus,
           player.playerData.name,
           "position",
@@ -85,6 +88,8 @@ gsiListener.events.on("newclient", function (client) {
           finalPayload[i] = getPlayerPayload(radiant[i]);
         }
       }
+
+      finalPayload[10] = [readeableDate];
 
       http
         .createServer(function (request, response) {
