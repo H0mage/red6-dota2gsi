@@ -1,0 +1,20 @@
+{
+  "name": "dota2-gsi-server",
+  "version": "1.0.0",
+  "description": "Server to listen to dota changes and report them",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "author": "john cabrera",
+  "license": "ISC",
+  "dependencies": {
+    "dota2-gsi": "^1.0.2",
+    "export-from-json": "^1.6.0",
+    "express": "^4.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  }
+}
